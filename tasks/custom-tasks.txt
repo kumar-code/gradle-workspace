@@ -1,0 +1,38 @@
+Gradle Build Lifecycle
+
+Build phases
+A Gradle build has three distinct phases.
+
+Initialization
+Gradle supports single and multi-project builds. During the initialization phase, Gradle determines which projects are going to take part in the build, and creates a Project instance for each of these projects.
+
+Configuration - common for all the tasks
+During this phase the project objects are configured. The build scripts of all projects which are part of the build are executed.
+
+Execution
+Gradle determines the subset of the tasks, created and configured during the configuration phase, to be executed. The subset is determined by the task name arguments passed to the gradle command and the current directory. Gradle then executes each of the selected tasks.
+
+
+Creating task (Always include doLast() method)
+
+println 'This is executed during the configuration phase.'
+
+tasks.register('configured') {
+    println 'This is also executed during the configuration phase, because :configured is used in the build.'
+}
+
+tasks.register('test') {
+    doLast {
+        println 'This is executed during the execution phase.'
+    }
+}
+
+tasks.register('testBoth') {
+	doFirst {
+	  println 'This is executed first during the execution phase.'
+	}
+	doLast {
+	  println 'This is executed last during the execution phase.'
+	}
+	println 'This is executed during the configuration phase as well, because :testBoth is used in the build.'
+}

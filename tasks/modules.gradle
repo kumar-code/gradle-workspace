@@ -1,0 +1,4 @@
+// print the modules/dependencies used in project
+project.configurations.runtimeClasspath.allDependencies.each { dep -> 
+    println `printing dependencies $dep.group:$dep.name:$dep.version`
+}
